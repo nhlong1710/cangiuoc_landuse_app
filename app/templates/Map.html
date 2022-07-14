@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>HỆ THỐNG QUẢN LÝ HIỆN TRẠNG SỬ DỤNG ĐẤT HUYỆN CẦN GIUỘC TỈNH LONG AN</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin="">
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Leaflet Plugins -->
+    <!-- MiniMap -->
+    <link rel="stylesheet" href="http://127.0.0.1:5000/static/css/Control.MiniMap.css">
+    <script src="http://127.0.0.1:5000/static/js/Control.MiniMap.js" type="text/javascript"></script>
+    <!-- markerClusterGroup -->
+    <link rel="stylesheet" href="http://127.0.0.1:5000/static/css/MarkerCluster.css">
+    <link rel="stylesheet" href="http://127.0.0.1:5000/static/css/MarkerCluster.Default.css">
+    <script src="http://127.0.0.1:5000/static/js/leaflet.markercluster-src.js" type="text/javascript"></script>
+    <!-- search Script and CSS -->
+    <link rel="stylesheet" href="http://127.0.0.1:5000/static/css/leaflet-search.css">
+    <script src="http://127.0.0.1:5000/static/js/leaflet-search.js" type="text/javascript"></script>
+    <!-- Switch BaseMap Script and CSS -->
+    <link rel="stylesheet" href="http://127.0.0.1:5000/static/css/L.switchBasemap.css">
+    <script src="http://127.0.0.1:5000/static/js/L.switchBasemap.js" type="text/javascript"></script>
+    <!-- Panel Layer Script and CSS -->
+    <link rel="stylesheet" href="http://127.0.0.1:5000/static/css/leaflet-panel-layers.css">
+    <script src="http://127.0.0.1:5000/static/js/leaflet-panel-layers.js" type="text/javascript"></script>
+    <!-- Coordinates projection Script and CSS -->
+    <link rel="stylesheet" href="http://127.0.0.1:5000/static/css/coord-projection.css">
+    <script src="http://127.0.0.1:5000/static/js/coord-projection.js" type="text/javascript"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.6.0/proj4.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/proj4leaflet/1.0.2/proj4leaflet.min.js"></script>
+    <!-- Right Double Click -->
+    <script src="http://127.0.0.1:5000/static/js/leaflet.rightclickzoom.js" type="text/javascript"></script>
+    <!-- ZoomBar Script and CSS -->
+    <link rel="stylesheet" href="http://127.0.0.1:5000/static/css/L.Control.ZoomBar.css">
+    <script src="http://127.0.0.1:5000/static/js/L.Control.ZoomBar.js" type="text/javascript"></script>
+    <!-- Print map -->
+    <script src="http://127.0.0.1:5000/static/js/bundle.js" type="text/javascript"></script>
+    <!-- Leaflet Draw Script and CSS -->
+    <link type="text/css" rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.9/leaflet.draw.css" />
+    <script type="application/javascript" src="//cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.9/leaflet.draw.js"></script>
+
+  </head>
+  <body>
+    <header id="header">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="header-content">
+              <div class="header-left d-flex">
+                <div class="text">
+                  <h4>HỆ THỐNG QUẢN LÝ HIỆN TRẠNG SỬ DỤNG ĐẤT HUYỆN CẦN GIUỘC TỈNH LONG AN</h3>
+                </div>
+              </div>
+              <nav id="menu_pc" class="nav-menu d-lg-block d-md-block d-none">
+                <a href="{{ url_for('showlist_parcel') }}">Dữ liệu thửa đất</a>
+                {% if current_user.is_authenticated %}
+                  <a>Hi! {{ current_user.fullname }}</a>
+                  <a href="{{ url_for('logout') }}">Logout</a>
+
+                {% endif %}
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="pagebody" style="margin-top: 43px; margin-bottom:0px">
+      <div id="mapid" style="width: 100%; height: 100%;;position:fixed"></div>
+    </div>
+  </body>
+</html>
+
+<script>
+  // Use Right Double Click and Measure Control
+  var mymap = L.map('mapid', {doubleRightClickZoom: true, zoomControl: true, measureControl: true}).setView([10.59896677990389, 106.6654224446616], 20);
+  //----------------------------------------------------------------------------//
+  //                           Basemap : Open Street Map
+  //----------------------------------------------------------------------------//
+  var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+  var osmAttrib='Map data &copy; OpenStreetMap contributors';
+  var osm = L.tileLayer(osmUrl, {attribution: osmAttrib}).addTo(mymap);
+  //----------------------------------------------------------------------------//
+  //                                Basemap : Esri
+  //----------------------------------------------------------------------------//
+  var esriUrl='https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';
+  var esriAttrib='Map data &copy; Esri contributors';
+  var esri = L.tileLayer(esriUrl, {attribution: esriAttrib});
+  //----------------------------------------------------------------------------//
+  //                                    Minimap
+  //----------------------------------------------------------------------------//
+  //Plugin magic goes here! Note that you cannot use the same layer object again, as that will confuse the two map controls
+  var osm2 = new L.TileLayer(osmUrl, {minZoom: 0, maxZoom: 13, attribution: osmAttrib });
+  var miniMap = new L.Control.MiniMap(osm2, { toggleDisplay: true }).addTo(mymap);
+  //----------------------------------------------------------------------------//
+  //               showFeatureInfor Of administrative and Preschool
+  //----------------------------------------------------------------------------//
+  // function showAdministrativeInfor(feature, layer) { // feature -> đối tượng, layer->map
+  //   if (feature.properties) {
+  //     layer.bindPopup("<span><b> Tên: </b>" + feature.properties.prefix +" "+ feature.properties.name +"</span></b>");
+  //   }
+  // }
+  function showParcelInfor(feature, layer) { // feature -> đối tượng, layer->map
+    if (feature.properties) {
+      layer.bindPopup("<span><b>Địa chỉ</b>: " + feature.properties.address +","+
+                        feature.properties.ward +","+  feature.properties.district +"</span></br>"
+                      + "<span><b>Diện tích</b>: " + feature.properties.area + " m2</span></br>"
+                      + "<span><b>Chủ sở hữu</b>: " + feature.properties.owner +"</span></br>"
+                      + "<span><b>Mục đích sử dụng đất: </b>"+ feature.properties.land_use + "</span></br>"
+                      + "<span><b>Năm cập nhật: </b>"+ feature.properties.updated_year + "</span></br>"
+                      + "<span class='text_white'><a id='add_new' href= " + "edit_parcel/" + feature.properties.id + ">Cập nhật</a></span>&nbsp&nbsp"
+                      + "<a class='text_white' href= " + "show_landuse_history/" + feature.properties.id + ">Xem lịch sử</a>"
+                     , {offset: [-5, -35] });
+
+    }
+  }
+  //----------------------------------------------------------------------------//
+  //                                      Get data
+  //----------------------------------------------------------------------------//
+
+  // use JQUERY/AJAX to get administrative province data
+  $.ajax({
+    url: "http://127.0.0.1:5000/api/v1/current_parcel",
+    dataType: 'json',
+    async: false, // async default = true
+    success: function(data) {
+      geojsonp = data;
+      console.log(data);
+    }
+  });
+  // set style
+  var residental_land = {
+    "color": "yellow",
+    "weight": 2,
+    "opacity": 0.9,
+    "fill": "yellow"
+  };
+  var service_land = {
+    "color": "blue",
+    "weight": 2,
+    "opacity": 0.9
+  };
+  var agricutural_land = {
+    "color": "green",
+    "weight": 2,
+    "opacity": 0.9
+  };
+
+  var current_parcel = L.geoJSON(geojsonp, {style: function(feature) {
+    switch (feature.properties.land_use) {
+        case "Đất ở": return residental_land;
+        case "Đất dịch vụ": return service_land;
+        case "Đất nông nghiệp": return agricutural_land;
+    }}, onEachFeature: showParcelInfor} ).addTo(mymap);
+
+    //Create legend
+		var legend = L.control({position: 'topright'});
+
+		legend.onAdd = function (mymap) {
+		    var div = L.DomUtil.create('div', 'info');
+        div.style.backgroundColor = 'white';
+		    div.innerHTML +=  '<span style="background: yellow" width=20px height=10px>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>&nbsp&nbspĐất ở <br>';
+        div.innerHTML +=  '<span style="background: blue" width=20px height=10px>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>&nbsp&nbspĐất dịch vụ <br>';
+        div.innerHTML +=  '<span style="background: green" width=20px height=10px>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>&nbsp&nbspĐất nông nghiệp <br>';
+				return div;
+		};
+		legend.addTo(mymap);
+  //----------------------------------------------------------------------------//
+  //                                  switch map
+  //----------------------------------------------------------------------------//
+  // L.basemapsSwitcher([
+  //   {
+  //     layer: osm,
+  //     icon: 'http://127.0.0.1:5000/static/img/openstreetmap.png',
+  //     name: 'OSM'
+  //   },
+  //   {
+  //     layer: esri,
+  //     icon: 'http://127.0.0.1:5000/static/img/esri.png',
+  //     name: 'Esri'
+  //   },
+  // ], { position: 'topright' }).addTo(mymap);
+
+  //----------------------------------------------------------------------------//
+  //                        Manage layer - Panel layers
+  //----------------------------------------------------------------------------//
+  // var baseLayers = [
+  // 	{
+  // 		name: "Open Street Map",
+  // 		layer: osm
+  // 	},
+  // 	{
+  // 		name: "Esri",
+  // 		layer: esri
+  // 	}
+  // ];
+  // var overLayers = [
+  // 	{
+  // 		group: "Trường học",
+  // 		layers: [
+  // 			{
+  // 				active: true,
+  // 				name: "Trường mầm non",
+  // 				icon: '<img src="http://127.0.0.1:5000/static/img/building2.png" style="height:20px;width:20px"/>',
+  // 				layer: Preschool_markers
+  // 			}
+  //       // ,{
+  // 			// 	active: true,
+  // 			// 	name: "River",
+  // 			// 	layer: Preschool_markers
+  // 			// },
+  // 		]
+  // 	},
+  //   {
+  //     group: "Nền địa lý",
+  //     layers: [
+  //       {
+  //         active: true,
+  //         name: "Ranh giới tỉnh",
+  //         icon: '<img src="http://127.0.0.1:5000/static/img/province.png" style="height:20px;width:20px"/>',
+  //         layer: Administrative_p
+  //       },
+  //       {
+  //         active: false,
+  //         name: "Địa phận huyện",
+  //         icon: '<img src="http://127.0.0.1:5000/static/img/district.png" style="height:20px;width:20px"/>',
+  //         layer: Administrative_d
+  //       },
+  //       {
+  //         active: false,
+  //         name: "Địa phận xã",
+  //         icon: '<img src="http://127.0.0.1:5000/static/img/commure.png" style="height:20px;width:20px"/>',
+  //         layer: Administrative_c
+  //       }
+  //     ]
+  //   }
+  // ];
+  //
+  // var panelLayers = new L.Control.PanelLayers(baseLayers, overLayers, {
+  // 	//compact: true,
+  // 	//collapsed: true,
+  // 	collapsibleGroups: true //	groups of layers is collapsible by button
+  // }).addTo(mymap);
+  //----------------------------------------------------------------------------//
+  //                          Leaflet.Control.Search
+  //----------------------------------------------------------------------------//
+  // var poiLayers = L.layerGroup([
+	// 	// Preschool_markers,
+	// 	Preschool_markers
+	// ])
+  //
+  // L.control.search({
+	// 	layer: poiLayers,
+	// 	initial: false, //True - only search on first text
+	// 	propertyName: 'name',
+  //   zoom: 16,
+	// 	buildTip: function(text, val) {
+	// 		var address = val.layer.feature.properties.address;
+	// 		return '<a href="#" class="'+address+'">'+text+' <b> - '+address+'</b></a>';
+	// 	}
+	// }).addTo(mymap);
+  // //----------------------------------------------------------------------------//
+  // //                          Leaflet.CoordProjection
+  // //----------------------------------------------------------------------------//
+  // L.control.coordProjection({
+  //   lngFormatter: function(lng){return " lng : " + lng},
+  //   latFormatter: function(lat){return " lat : " + lat}
+  //       }).addTo(mymap);
+  // //----------------------------------------------------------------------------//
+  // //                          Leaflet.Control.ZoomBar
+  // //----------------------------------------------------------------------------//
+  // var zoom_bar = new L.Control.ZoomBar({position: 'topleft'}).addTo(mymap);
+  // //----------------------------------------------------------------------------//
+  // //                          Leaflet.easyPrint
+  // //----------------------------------------------------------------------------//
+  // var printer = L.easyPrint({
+  //     tileLayer: osm,
+  //     sizeModes: ['Current', 'A4Landscape', 'A4Portrait'],
+  //     filename: 'myMap',
+  //     exportOnly: true,
+  //     hideControlContainer: true
+  // }).addTo(mymap);
+  // //----------------------------------------------------------------------------//
+  // //                          Leaflet.Draw (Selection of marker)
+  // //----------------------------------------------------------------------------//
+  // new L.Control.Draw({
+  //     // Choose (Turn on/Turn of) some toolbar
+  //     draw: {
+  //         marker   : false,
+  //         polygon  : false,
+  //         polyline : false,
+  //         rectangle: true,
+  //         circle   : {
+  //             //Choose ft -> km
+  //             metric: 'metric'
+  //         }
+  //     },
+  //     edit: false
+  // }).addTo(mymap);
+  //
+  // // L.Polygon.include({
+  // //     //Luu tru gioi han
+  // //     //Turf tap hop modul nho
+  // //     contains: function (latLng) {
+  // //         return turf.inside(new L.Marker(latLng).toGeoJSON(), this.toGeoJSON());
+  // //     }
+  // // });
+  //
+  // L.Rectangle.include({
+  //     contains: function (latLng) {
+  //         return this.getBounds().contains(latLng);
+  //     }
+  // });
+  //
+  // L.Circle.include({
+  //     contains: function (latLng) {
+  //         return this.getLatLng().distanceTo(latLng) < this.getRadius();
+  //     }
+  // });
+  // // event when draw (Some polyline:; polygon; rectangle; circle; marker will Turn on/Turn of)
+  // mymap.on(L.Draw.Event.CREATED, function (e) {
+  //     Preschool_markers.eachLayer(function (marker) {
+  //         if (!e.layer.contains(marker.getLatLng())) {
+  //             marker.remove();
+  //         }
+  //     });
+  // });
+</script>

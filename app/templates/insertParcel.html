@@ -1,0 +1,29 @@
+{% extends "layout_parcel_list.html" %}
+
+{% block title %}
+Danh sách các thửa đất trong huyện Cần Giuộc
+{% endblock %}
+
+{% block detail %}
+
+  <div class="container">
+    <div class="col-12 content">
+        <p class="title">Thêm thửa đất mới</p><br>
+    </div>
+    <form action="" method="post">
+      {{ form.hidden_tag() }}
+      {% for field in form %}
+      <p>
+          {{ field.label }}<br>
+          {{ field(class="col-6") }}<br>
+          {% for error in field.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+      </p>
+      {% endfor %}
+    </form>
+    {% with messages = get_flashed_messages() %}
+      <h2> {{messages[0]}} </h2>
+    {% endwith %}
+  </div>
+{% endblock %}

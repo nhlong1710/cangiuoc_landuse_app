@@ -1,0 +1,45 @@
+{% extends "layout_parcel_list.html" %}
+
+{% block title %}
+Chỉnh sửa thông tin thửa đất
+{% endblock %}
+
+{% block detail %}
+  <div class="col-12 content">
+      <p class="title">Sửa thông tin thửa đất</p>
+  </div>
+  <form action="{{ url_for('edit_parcel_result') }}" method="post" style="margin-top:10px;">
+    <div class="form-group">
+      <label for="ID">ID</label>
+      <input id='id' name='id' value="{{parcel.id}}" readonly=True>
+    </div
+    <div class="form-group">
+      <label for="owner">Chủ sở hữu</label>
+      <input id='owner' name='owner' value="{{parcel.owner}}">
+    </div>
+    <div class="form-group">
+      <label for="address">Địa chỉ</label>
+      <input id='address' name='address' value="{{parcel.address}}">
+    </div>
+    <div class="form-group">
+      <label for="ward">Xã/Thị Trấn</label>
+      <select class="" name="ward">
+        {% for ward in wards %}
+        <option value="{{ ward.ward_name }}">{{ ward.ward_name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="area">diện tích</label>
+      <input id='area' name='area' value="{{parcel.area}}">
+    </div>
+    <div class="form-group">
+      <label for="land_use">Mục đích sử dụng đất</label>
+      <input id='land_use' name='land_use' value="{{parcel.land_use}}">
+    </div>
+    <div class="form-group">
+      <button class="btn btn-primary">Chỉnh sửa</button>
+    </div>
+  </form>
+
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends "layout_parcel_list.html" %}
+
+{% block title %}
+Danh sách các thửa đất trong huyện Cần Giuộc
+{% endblock %}
+
+{% block detail %}
+
+  <div class="col-12 content">
+      <p class="title">Danh sách các thửa đất trong huyện Cần Giuộc </p>
+  </div>
+  <div class="col-12 content">
+      <form action="" method="GET">
+        <input type="search" placeholder="Search" aria-label="Search" name="search_kw" value=""></input>
+        <button class="btn btn-primary" type="submit">Tìm kiếm</button>
+      </form>
+      {% if current_user.is_admin == 1 %}
+        <p ><a href="{{ url_for('insertParcel') }} " class="btn btn-info add_new">Thêm mới</a></p>
+      {% endif %}
+  </div>
+  <div class="col-12 viewTable">
+    <table>
+    	<tbody>
+    		<thead>
+    			<td>STT</td>
+    			<td style="width:250px;">Chủ sở hữu</td>
+          <td style="width:400px;">Địa chỉ</td>
+          <td style="width:100px;">Diện tích (m2)</td>
+          <td style="width:280px;">Mục đích sử dụng đất</td>
+          <td style="width:160px;">Năm cập nhật</td>
+          {% if current_user.is_admin == 1 %}
+            <td style="width:80px;">Edit</td>
+            <td style="width:80px;">Delete</td>
+          {% endif %}
+    		</thead>
+        {% set count = [] %}
+        {% for parcel in parcels %}
+    		<tbody>
+          {% set __ = count.append(1) %}
+    			<td>{{ count|length }}</td>
+    			<td>{{ parcel.owner }}</td>
+          <td>{{ parcel.address }} , {{ parcel.ward }}</td>
+          <td>{{ parcel.area }}</td>
+          <td>{{ parcel.land_use }}</td>
+          <td>{{ parcel.updated_year }}</td>
+          {% if current_user.is_admin == 1 %}
+            <td><a href="{{ url_for('edit_parcel', parcel_id=parcel.id) }}"><i class="fas fa-edit"></i></a></td>
+            <td><a href="{{ url_for('delete_parcel', parcel_id=parcel.id) }}"><i class="fas fa-trash-alt"></i></a></td>
+          {% endif %}
+    		</tbody>
+        {% endfor %}
+    	</tbody>
+    </table>
+  </div>
+{% endblock %}

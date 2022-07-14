@@ -1,0 +1,38 @@
+{% extends "layout_parcel_list.html" %}
+
+{% block title %}
+Danh sách các thửa đất trong huyện Cần Giuộc
+{% endblock %}
+
+{% block detail %}
+
+  <div class="col-12 content">
+      <p class="title">Lịch sử mục đích sử dụng đất của thửa đất tại địa chỉ {{ parcel.address }}, {{ parcel.ward }} </p>
+  </div>
+  <div class="col-12 viewTable">
+    <table>
+    	<tbody>
+    		<thead>
+    			<td>STT</td>
+    			<td style="width:350px;">Mục đích sử dụng đất</td>
+          <td style="width:100px;">Năm cập nhật</td>
+    		</thead>
+        {% set count = [] %}
+        {% for landuse in landuseHistory %}
+    		<tbody>
+          {% set __ = count.append(1) %}
+    			<td>{{ count|length }}</td>
+    			<td>{{ landuse.land_use }}</td>
+          <td>{{ landuse.updated_year }}</td>
+    		</tbody>
+        {% endfor %}
+        <tbody>
+          {% set __ = count.append(1) %}
+          <td>{{ count|length }}</td>
+          <td>{{ parcel.land_use }}</td>
+          <td>{{ parcel.updated_year }}</td>
+        </tbody>
+    	</tbody>
+    </table>
+  </div>
+{% endblock %}

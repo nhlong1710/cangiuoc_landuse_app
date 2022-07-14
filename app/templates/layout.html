@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  </head>
+  <body>
+    <header id="header">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="header-content">
+              <div class="header-left d-flex">
+                <div class="text">
+                  <h3>CONIU</h3>
+                </div>
+              </div>
+              <nav id="menu_pc" class="nav-menu d-lg-block d-md-block d-none">
+                <a href="{{ url_for('map') }}">Bản đồ</a>
+                <a href="{{ url_for('showlist_preschool') }}">Dữ liệu</a>
+                {% if current_user.is_authenticated %}
+                  <a>Hi! {{ current_user.fullname }}</a>
+                  <a href="{{ url_for('logout') }}">Logout</a>
+                {% endif %}
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="pagebody">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3 LeftPanel">
+            <div class="nav-side-menu">
+              <div class="brand">Thông tin học phí </div>
+              <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menutuition-content"></i>
+              <div class="menu-list">
+                <ul id="menutuition-content" class="menu-content collapse out">
+                  <li data-toggle="collapse" data-target="#tuition" class="collapsed active">
+                    <a href="#">
+                      <i class="fas fa-money-check-alt"></i> Học phí <span class="arrow"></span>
+                    </a>
+                  </li>
+                  <ul class="sub-menu collapse" id="tuition">
+                    <li class="active">
+                      <a href="{{ url_for('showlist_tuition1', preschool_id=preschool_id) }}">Mức học phí</a>
+                    </li>
+                  </ul>
+                  <li data-toggle="collapse" data-target="#tuitionfee_list" class="collapsed">
+                    <a href="#">
+                      <i class="fas fa-money-check-alt"></i> Danh sách thanh toán học phí <span class="arrow"></span>
+                    </a>
+                  </li>
+                  <ul class="sub-menu collapse" id="tuitionfee_list">
+                    <li>
+                      <a href="{{ url_for('showlist_tuitionfee1', preschool_id=preschool_id) }}">Danh sách</a>
+                    </li>
+                  </ul>
+              </div>
+            </div>
+            <div class="nav-side-menu">
+              <div class="brand">Thông tin cho trẻ</div>
+              <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menuchild-content"></i>
+              <div class="menu-list">
+                <ul id="menuchild-content" class="menu-content collapse out">
+                  <li data-toggle="collapse" data-target="#event" class="collapsed">
+                    <a href="#">
+                      <i class="fas fa-bell"></i> Thông báo - Sự kiện <span class="arrow"></span>
+                    </a>
+                  </li>
+                  <ul class="sub-menu collapse" id="event">
+                    <li>
+                      <a href="{{ url_for('showlist_event', preschool_id=preschool_id) }}">Thông báo - Sự kiện</a>
+                    </li>
+                  </ul>
+                  <li data-toggle="collapse" data-target="#schedule " class="collapsed">
+                    <a href="#">
+                      <i class="fas fa-calendar-alt"></i> Lịch học <span class="arrow"></span>
+                    </a>
+                  </li>
+                  <ul class="sub-menu collapse" id="schedule">
+                    <li>
+                      <a href="{{ url_for('showlist_timetable1', preschool_id=preschool_id) }}">Thời khóa biểu</a>
+                    </li>
+                  </ul>
+                  <li data-toggle="collapse" data-target="#foodmenu" class="collapsed">
+                    <a href="#">
+                      <i class="fas fa-utensils"></i> Thực đơn <span class="arrow"></span>
+                    </a>
+                  </li>
+                  <ul class="sub-menu collapse" id="foodmenu">
+                    <li>
+                      <a href="{{ url_for('showlist_menu1', preschool_id=preschool_id) }}">Thực đơn</a>
+                    </li>
+                  </ul>
+                  <li data-toggle="collapse" data-target="#contact" class="collapsed">
+                    <a href="#">
+                      <i class="fas fa-phone"></i> Sổ liên lạc <span class="arrow"></span>
+                    </a>
+                  </li>
+                  <ul class="sub-menu collapse" id="contact">
+                    <li>
+                      <a href="{{ url_for('showlist_contact1', preschool_id=preschool_id) }}">Thông tin liên lạc</a>
+                    </li>
+                  </ul>
+                </ul>
+              </div>
+            </div>
+            <div class="nav-side-menu">
+              <div class="brand">Trường</div>
+              <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menuschool-content"></i>
+              <div class="menu-list">
+                <ul id="menuschool-content" class="menu-content collapse out">
+                  <li data-toggle="collapse" data-target="#class" class="collapsed">
+                    <a href="#">
+                      <i class="fas fa-school"></i> Khối - Lớp <span class="arrow"></span>
+                    </a>
+                  </li>
+                  <ul class="sub-menu collapse" id="class">
+                    <li>
+                      <a href="{{ url_for('showlist_grade', preschool_id=preschool_id) }}">Danh sách Khối - Lớp</a>
+                    </li>
+                  </ul>
+                  <li data-toggle="collapse" data-target="#teacher" class="collapsed">
+                    <a href="#">
+                      <i class="fas fa-user-friends"></i> Giáo viên <span class="arrow"></span>
+                    </a>
+                  </li>
+                  <ul class="sub-menu collapse" id="teacher">
+                    <li>
+                      <a href="{{ url_for('showlist_teacher1', preschool_id=preschool_id) }}">Danh sách giáo viên</a>
+                    </li>
+                  </ul>
+                  <li data-toggle="collapse" data-target="#children" class="collapsed">
+                    <a href="#">
+                      <i class="fas fa-child"></i> Trẻ <span class="arrow"></span>
+                    </a>
+                  </li>
+                  <ul class="sub-menu collapse" id="children">
+                    <li>
+                      <a href="{{ url_for('showlist_student_grade', preschool_id=preschool_id) }}">Thông tin các bé</a>
+                    </li>
+                  </ul>
+                </ul>
+              </div>
+            </div>
+            <div class="nav-side-menu">
+              <div class="brand">Hệ thống</div>
+              <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menuadmin-content"></i>
+              <div class="menu-list">
+                <ul id="menuadmin-content" class="menu-content collapse out">
+                  <li data-toggle="collapse" data-target="#admin" class="collapsed">
+                    <a href="#">
+                      <i class="fas fa-user-cog"></i> Quản trị <span class="arrow"></span>
+                    </a>
+                  </li>
+                  <ul class="sub-menu collapse" id="admin">
+                    <li>
+                      <a href="{{ url_for('showlist_system_users', preschool_id=preschool_id) }}">Phân quyền</a>
+                    </li>
+                  </ul>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-9 RightPanel">
+            <div id="detailPanel"> {%block body%} {%endblock%} </div>
+            {% with messages = get_flashed_messages() %}
+              <h2> {{messages[0]}} </h2>
+            {% endwith %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="footer">
+      <div class="footer-top">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8">
+              <div class="footer-left">
+                <h4>CONIU</h4>
+                <ul>
+                  <li>Địa chỉ: Tầng 3-4, Tòa nhà T2, Phường Cổ Nhuế 2, Quận Bắc Từ Liêm, TP Hà Nội</li>
+                  <li>Điện thoại: 0382.174.863</li>
+                  <li>Email: coniu@hanoi.gov.vn</li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="footer-right">
+                <h4>Liên kết nhanh</h4>
+                <ul>
+                  <li>
+                    <a href="https://moet.gov.vn/Pages/home.aspx">Bộ giáo dục và đào tạo</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="content">
+                <p>Cơ quan chủ quản: Bộ giáo dục và đào tạo</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

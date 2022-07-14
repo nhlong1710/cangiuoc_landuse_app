@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  </head>
+  <body>
+    <header id="header">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="header-content">
+              <div class="header-left d-flex">
+                <div class="text">
+                  <h3>HỆ THỐNG QUẢN LÝ HIỆN TRẠNG SỬ DỤNG ĐẤT HUYỆN CẦN GIUỘC TỈNH LONG AN</h3>
+                </div>
+              </div>
+              <nav id="menu_pc" class="nav-menu d-lg-block d-md-block d-none">
+                <a href="{{ url_for('map') }}">Bản đồ</a>
+                {% if not current_user.is_authenticated %}
+                  <a href="{{ url_for('login') }}">Đăng nhập</a>
+                {% endif %}
+                {% if current_user.is_authenticated %}
+                  <a>Hi! {{ current_user.fullname }}</a>
+                  <a href="{{ url_for('logout') }}">Logout</a>
+                {% endif %}
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="pagebody" style="min-height: 500px;">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3 LeftPanel">
+            <div class="nav-side-menu">
+              <div class="brand">Dữ liệu</div>
+              <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menudatamap-content"></i>
+              <div class="menu-list">
+                <ul id="menudatamap-content" class="menu-content collapse out">
+                  <li data-toggle="collapse" data-target="" class="collapsed active">
+                    <a href="{{ url_for('showlist_parcel') }}"><i class="fas fa-money-check-alt"></i> Danh sách các thửa đất</a>
+                  </li>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-9 RightPanel">
+            <div id="detailPanel"> {%block detail%} {%endblock%} </div>
+            {% with messages = get_flashed_messages() %}
+              <h2> {{messages[0]}} </h2>
+            {% endwith %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="footer">
+      <div class="footer-top">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8">
+              <div class="footer-left">
+                <h4>HỆ THỐNG QUẢN LÝ HIỆN TRẠNG SỬ DỤNG ĐẤT HUYỆN CẦN GIUỘC TỈNH LONG AN</h4>
+                <ul>
+                  <li>Điện thoại: 09123456789</li>
+                  <li>Email: diachinh@longan.gov.vn</li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="footer-right">
+                <h4>Liên kết nhanh</h4>
+                <ul>
+                  <li>
+                    <a href="">Sở địa chính Tỉnh Long An</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="content">
+                <p>Cơ quan chủ quản: Sở địa chính Huyện Cần Giuộc, Tỉnh Long An</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

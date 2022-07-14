@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  </head>
+  <body>
+    <div class="container">
+      <h1>Login</h1>
+      <form action="" method="post">
+        {{ form.hidden_tag() }}
+          <p>
+            {{ form.account.label }}<br>
+            {{ form.account(class="form-control") }}<br>
+            {% for error in form.account.errors %}
+              <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+          </p>
+          <p>
+            {{ form.password.label }}<br>
+            {{ form.password(class="form-control") }}<br>
+            {% for error in form.password.errors %}
+              <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+          </p>
+          <div class="input-group-text" id="check_remember">
+            <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
+          </div>
+          <p>{{ form.submit(class="btn btn-primary") }}</p>
+          <p>New User? <a href="{{ url_for('signUp_form') }}">Click to Register!</a></p>
+      </form>
+      {% with messages = get_flashed_messages() %}
+        <h2> {{messages[0]}} </h2>
+      {% endwith %}
+    </div>
+  </body>
+</html>
